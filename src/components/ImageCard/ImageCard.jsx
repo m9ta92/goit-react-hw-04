@@ -1,24 +1,11 @@
-import { TbUserFilled } from 'react-icons/tb';
-import { TbPhoneFilled } from 'react-icons/tb';
+import css from './ImageCard.module.css';
 
-const Contact = ({ id, name, number, onDeleteContact }) => {
+const ImageCard = ({ src, alt }) => {
   return (
-    // <div className={css.contactCard}>
-    //   <div>
-    //     <div className={css.asd}>
-    //       <TbUserFilled />
-    //       <p>{name}</p>
-    //     </div>
-    //     <div className={css.asd}>
-    //       <TbPhoneFilled />
-    //       <a href="tel:">{number}</a>
-    //     </div>
-    //   </div>
-    //   <button className={css.deleteBtn} onClick={() => onDeleteContact(id)}>
-    //     ❌
-    //   </button>
-    // </div>
+    <div>
+      <img className={css.img} src={src} alt={alt} />
+    </div>
   );
 };
 
-export default Contact;
+export default ImageCard;

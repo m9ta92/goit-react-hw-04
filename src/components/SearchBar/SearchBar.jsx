@@ -1,29 +1,35 @@
 import css from './SearchBar.module.css';
+import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SearchBar = ({ onSubmit }) => {
-  return (
-    // <div className={css.search}>
-    //   <h4>Find contacts by name:</h4>
-    //   <input
-    //     className={css.input}
-    //     type="text"
-    //     placeholder="Search contacts..."
-    //     // necessarily ↓
-    //     value={filterValue}
-    //     onChange={handleChange}
-    //   />
-    // </div>
+  const [term, setTerm] = useState(null);
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (term === null) {
+      toast.error('Please enter a value to search for !');
+      return;
+    } else {
+      toast.success('Successfully!');
+      onSubmit(term.trim());
+    }
+  };
+  return (
     <header>
-      <form>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
+          className={css.searchInput}
           type="text"
           autoComplete="off"
           autoFocus
-          placeholder="Search images and photos"
-          onChange={onSubmit}
+          placeholder="Search images and photos ..."
+          onChange={event => setTerm(event.target.value)}
         />
-        <button type="submit">Search</button>
+        <Toaster position="top-right" reverseOrder={false} />
+        <button className={css.searchBtn} type="submit">
+          Search
+        </button>
       </form>
     </header>
   );
