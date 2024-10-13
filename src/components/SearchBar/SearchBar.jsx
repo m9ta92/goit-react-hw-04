@@ -3,17 +3,16 @@ import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SearchBar = ({ onSubmit }) => {
-  const [term, setTerm] = useState(null);
+  const [term, setTerm] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (term === null) {
-      toast.error('Please enter a value to search for !');
+    if (term.trim() === '') {
+      toast.error('Please enter a correct value to search for !');
       return;
-    } else {
-      toast.success('Successfully!');
-      onSubmit(term.trim());
     }
+    onSubmit(term.trim());
+    setTerm('');
   };
   return (
     <header>
@@ -21,6 +20,8 @@ const SearchBar = ({ onSubmit }) => {
         <input
           className={css.searchInput}
           type="text"
+          name="name"
+          value={term}
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos ..."
