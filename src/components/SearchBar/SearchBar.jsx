@@ -9,6 +9,7 @@ const SearchBar = ({ onSubmit }) => {
     event.preventDefault();
     if (term.trim() === '') {
       toast.error('Please enter a correct value to search for !');
+      setTerm('');
       return;
     }
     onSubmit(term.trim());
