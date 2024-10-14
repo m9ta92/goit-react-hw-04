@@ -1,6 +1,7 @@
-// imports ↓
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import ReactModal from 'react-modal';
+ReactModal.setAppElement('#root');
 
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import Loader from '../Loader/Loader.jsx';
@@ -8,8 +9,6 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage.jsx';
 import ImageGallery from '../ImageGallery/ImageGallery.jsx';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
 import ImageModal from '../ImageModal/ImageModal.jsx';
-import ReactModal from 'react-modal';
-ReactModal.setAppElement('#root');
 
 function App() {
   const [searchValue, setSearchValue] = useState(null);
