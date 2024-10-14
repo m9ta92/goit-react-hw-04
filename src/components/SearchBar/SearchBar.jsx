@@ -24,7 +24,7 @@ const SearchBar = ({ onSubmit }) => {
           value={term}
           autoComplete="off"
           autoFocus
-          placeholder="Search images and photos ..."
+          placeholder="Search images and photos..."
           onChange={event => setTerm(event.target.value)}
         />
         <Toaster position="top-right" reverseOrder={false} />

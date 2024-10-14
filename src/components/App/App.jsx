@@ -1,14 +1,15 @@
 // imports ↓
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import Loader from '../Loader/Loader.jsx';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.jsx';
 import ImageGallery from '../ImageGallery/ImageGallery.jsx';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
-import { GoAlert } from 'react-icons/go';
-// import ImageModal from '../ImageModal/ImageModal.jsx';
+import ImageModal from '../ImageModal/ImageModal.jsx';
+import ReactModal from 'react-modal';
+ReactModal.setAppElement('#root');
 
 function App() {
   const [searchValue, setSearchValue] = useState(null);
@@ -17,14 +18,18 @@ function App() {
   const [images, setImages] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    {
-      images &&
-        window.scrollBy({
-          top: 100,
-          behavior: 'smooth',
-        });
+    if (images === null) {
+      return;
+    }
+    if (images.length > 24) {
+      window.scrollBy({
+        top: 550,
+        behavior: 'smooth',
+      });
     }
   }, [images]);
 
@@ -34,7 +39,7 @@ function App() {
       try {
         setIsLoading(true);
         const imagesBySearch = await axios.get(
-          `https://api.unsplash.com/search/photos?client_id=teidMVVe7-sWKxTRBIvTmeV8BBwYOnKyaG_QYy0T0iw&per_page=12&query=${searchValue}&page=${page}`
+          `https://api.unsplash.com/search/photos?client_id=teidMVVe7-sWKxTRBIvTmeV8BBwYOnKyaG_QYy0T0iw&per_page=24&query=${searchValue}&page=${page}`
         );
 
         if (page > 1) {
@@ -65,16 +70,30 @@ function App() {
     setPage(newPage);
   };
 
+  const modalImage = image => {
+    setSelectedImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
+
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
-      <ImageGallery images={images} />
+      <ImageGallery images={images} modalImage={modalImage} />
       {totalPage === page ? null : (
         <LoadMoreBtn totalPage={totalPage} loadNextPage={loadNextPage} />
       )}
-      {/* <ImageModal /> */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        image={selectedImage}
+      />
     </>
   );
 }

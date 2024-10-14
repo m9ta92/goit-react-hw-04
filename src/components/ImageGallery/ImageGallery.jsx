@@ -4,13 +4,18 @@ import css from './ImageGallery.module.css';
 // Не обмежуйся завданням, використовуй дані із об'єктів, щоб відобразити більше цікавої інформації в модальному вікні.
 // Наприклад, про автора зображення, кількість лайків, опис і т.д.
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, modalImage }) => {
   return (
     <ul className={css.imgList}>
       {images !== null &&
         images.map(image => (
           <li key={image.id}>
-            <ImageCard src={image.urls.small} alt={image.alt} />
+            <ImageCard
+              href={image.urls.full}
+              src={image.urls.small}
+              alt={image.alt}
+              modalImage={modalImage}
+            />
           </li>
         ))}
     </ul>

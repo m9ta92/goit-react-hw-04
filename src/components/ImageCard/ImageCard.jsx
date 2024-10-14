@@ -1,10 +1,13 @@
 import css from './ImageCard.module.css';
 
-const ImageCard = ({ src, alt }) => {
+const ImageCard = ({ href, src, alt, modalImage }) => {
   return (
-    <div>
-      <img className={css.img} src={src} alt={alt} />
-    </div>
+    <img
+      className={css.img}
+      onClick={() => modalImage(href)}
+      src={src}
+      alt={alt}
+    />
   );
 };
 
